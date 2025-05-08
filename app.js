@@ -30,7 +30,7 @@ function userFLash(btn){
     btn.classList.add("userFlash");
     setTimeout(function(){
         btn.classList.remove("userFlash");
-    },200);
+    },150);
 }
 
 
@@ -52,10 +52,15 @@ function levelUp(){
 function checkAns(idx){
     if(userseq[idx] == gameseq[idx]){
         if(userseq.length == gameseq.length){
-            setTimeout(levelUp(),2000);
+            setTimeout(levelUp(),2500);
         }
     }else{
-        h2.innerText = "Game Over! Press Any Key To Start Again.";
+        h2.innerHTML = `Game Over! Your Score Was <h1>${level}</h1> <br> Press Any Key To Start Again.`;
+        document.querySelector("body").style.backgroundColor = "red";
+        setTimeout(function(){
+            document.querySelector('body').style.backgroundColor = "white";
+        },100);
+        reset();
     }
 }
 
@@ -66,7 +71,7 @@ function btnPress(){
 
     userColor = btn.getAttribute("id");
     userseq.push(userColor);
-    console.log(userseq);
+    // console.log(userseq);
 
     checkAns(userseq.length-1);
 }
@@ -74,4 +79,11 @@ function btnPress(){
 let allbtn = document.querySelectorAll('.btn');
 for(btn of allbtn){
     btn.addEventListener("click",btnPress);
+}
+
+function reset(){
+    started = false;
+    gameseq = [];
+    userseq = [];
+    level = 0;
 }
