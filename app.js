@@ -30,12 +30,13 @@ function userFLash(btn){
     btn.classList.add("userFlash");
     setTimeout(function(){
         btn.classList.remove("userFlash");
-    },250);
+    },200);
 }
 
 
 //Level Up The Game
 function levelUp(){
+    userseq = [];
     level++;
     h2.innerText = `Level ${level}`;
 
@@ -43,13 +44,31 @@ function levelUp(){
     let randColor = btns[randIdx];
     let randbtn = document.querySelector(`.${randColor}`);
 
+    gameseq.push(randColor);
+    console.log(gameseq);
     gameFLash(randbtn);
+}
+
+function checkAns(idx){
+    if(userseq[idx] == gameseq[idx]){
+        if(userseq.length == gameseq.length){
+            setTimeout(levelUp(),2000);
+        }
+    }else{
+        h2.innerText = "Game Over! Press Any Key To Start Again.";
+    }
 }
 
 //After 1st Flash
 function btnPress(){
     let btn = this;
     userFLash(btn);
+
+    userColor = btn.getAttribute("id");
+    userseq.push(userColor);
+    console.log(userseq);
+
+    checkAns(userseq.length-1);
 }
 
 let allbtn = document.querySelectorAll('.btn');
